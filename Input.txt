@@ -1,0 +1,38 @@
+﻿
+	var message=prompt("Insert a string", "hello world");
+	var digit=5+6%7;
+	digit--;
+	message="hello world";
+	var array=[5,"666",4];
+
+	function main(argv){
+		for(var i=0; i<10; i++){
+			alert(message);
+		}
+		return 0;
+	}
+
+	//gh()[78](32);
+
+	main(digit, function anonym(){});
+
+	var b= function f(){
+		alert("hi");
+		while(a==1)
+			alert(1);
+		do
+			alert(2);
+		while(a==2)
+	};
+
+	b();
+
+	b=array[2];
+
+	if(!(digit<6) || digit==66 && f==0)
+		alert(6);
+	else alert("error");
+
+	var myArr=[[3,4,5],[6,7,8],[6,45,3]];
+
+	alert(myArr[1]);
