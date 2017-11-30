@@ -1,17 +1,10 @@
 package ru.vsu.model;
 
-import ru.vsu.model.interfaces.Element;
+import ru.vsu.model.abstracts.Element;
 
-import java.lang.Number;
-
-public class Add implements Element{
-
-    Object getOperand(int id) throws Exception{
-        return children.get(id).proceed();
-    }
-
+public class Add extends Element{
     public Object proceed() throws Exception {
-        if(getOperand(0) instanceof Number && getOperand(1) instanceof Number){
+        if(getOperand(0) instanceof java.lang.Number && getOperand(1) instanceof java.lang.Number){
             return (Float)getOperand(0) + (Float)getOperand(1);
         }
         else{

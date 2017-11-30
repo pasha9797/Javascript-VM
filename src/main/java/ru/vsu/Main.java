@@ -24,9 +24,10 @@ public class Main {
 
     static void printTree(CommonTree tree, int level) {
         for (int i = 0; i < level; i++) {
-            System.out.print("  ");
+            System.out.print("|  ");
         }
-        System.out.println(tree);
+        //System.out.println("|- "+tree);
+        System.out.println((char) 27 + "[7m" + "|- " + tree + (char)27 + "[0m");
 
         if (tree.getChildCount() > 0) {
             ArrayList list = (ArrayList) tree.getChildren();

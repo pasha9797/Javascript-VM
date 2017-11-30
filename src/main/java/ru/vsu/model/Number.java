@@ -1,8 +1,8 @@
 package ru.vsu.model;
 
-import ru.vsu.model.interfaces.Element;
+import ru.vsu.model.abstracts.Element;
 
-public class Number implements Element{
+public class Number extends Element{
     public Object proceed() {
         return value;
     }

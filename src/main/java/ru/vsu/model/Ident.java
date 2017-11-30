@@ -1,19 +1,11 @@
 package ru.vsu.model;
 
-import ru.vsu.model.interfaces.Element;
-import ru.vsu.model.interfaces.Namespace;
+import ru.vsu.model.abstracts.Element;
+import ru.vsu.model.abstracts.Namespace;
 
-public class Ident implements Element {
+public class Ident extends Element {
     public Object proceed() throws Exception {
-        Element par=parent;
-        while(par != null){
-            if(par instanceof Namespace){
-                return ((Namespace)par).var_table.get(value);
-            }
-            else par=par.parent;
-        }
-
-        throw new Exception("Could not find parent of IDENT");
+        return getParentNameSpace().var_table.get(value);
     }
 
     @Override

@@ -27,7 +27,6 @@ tokens {
   ARRAY				;
   ARR_CALL			;
   BLOCK               ;
-  PROGRAM             ;
   PARAMS              ;
   ATTRS				;
 }
