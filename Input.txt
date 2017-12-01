@@ -1,38 +1,50 @@
-﻿
-	var message=prompt("Insert a string", "hello world");
-	var digit=5+6%7;
-	digit--;
-	message="hello world";
-	var array=[5,"666",4];
+﻿main("one");
 
-	function main(argv){
-		for(var i=0; i<10; i++){
-			alert(message);
-		}
-		return 0;
-	}
+var a;
+a = 5;
+b = 10;
+c = a + b;
+alert(c);
 
-	//gh()[78](32);
+a = "hello";
+alert(a + " " + c);
 
-	main(digit, function anonym(){});
+for(var i = 0; i< 4; i++){
+    alert("Loop i = " + i);
+}
 
-	var b= function f(){
-		alert("hi");
-		while(a==1)
-			alert(1);
-		do
-			alert(2);
-		while(a==2)
-	};
+function test(arg1, arg2){
+    return prompt("Write something" + arg1 + arg2, "default");
+}
 
-	b();
+function main(args){
+    alert("main func called with arg: " + args);
+}
 
-	b=array[2];
+a=4;
+if(a>5){
+ alert("a>5");
+}
+else{
+ alert("a<=5");
+}
 
-	if(!(digit<6) || digit==66 && f==0)
-		alert(6);
-	else alert("error");
+if(a==4 && c>0){
+    var j = abs(0-5);
+    alert("abs of -5: " + j);
+}
 
-	var myArr=[[3,4,5],[6,7,8],[6,45,3]];
+var array;
+array=[4,5,6,"str"];
 
-	alert(myArr[1]);
+i=0;
+while(i<=3){
+    alert(array[i]);
+    i++;
+}
+
+alert(array);
+
+test2=test;
+
+alert(test2("ggg", "gggg"));

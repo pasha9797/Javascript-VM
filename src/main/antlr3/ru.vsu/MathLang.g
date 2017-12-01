@@ -8,27 +8,23 @@ options {
   memoize=true;
 }
 
-
 tokens {
-  UNKNOWN             ;
-  PRINT   = 'alert'   ;
-  ABS		=	'abs'	;
-  PROMPT   = 'prompt'   ;
-  DECL = 'var';
-  IF = 'if'           ;
-  FOR = 'for'         ;
-  FUNCTION = 'function' ;
-  FUNC_CALL				;
-  RETURN = 'return'   ;
-  WHILE = 'while'     ;
-  DO = 'do'				;
-  INCR				;
-  DECR				;
-  ARRAY				;
-  ARR_CALL			;
-  BLOCK               ;
-  PARAMS              ;
-  ATTRS				;
+  UNKNOWN                   ;
+  DECL      =   'var'       ; //
+  IF        =   'if'        ; //
+  FOR       =   'for'       ; //
+  FUNCTION  =   'function'  ; //
+  FUNC_CALL				    ; //
+  RETURN    =   'return'    ; //
+  WHILE     =   'while'     ; //
+  DO        =   'do'	    ; //
+  INCR				        ; //
+  DECR				        ; //
+  ARRAY				        ; //
+  ARR_CALL			        ; //
+  BLOCK                     ; //
+  PARAMS                    ; //
+  ARGS				        ; //
 }
 
 
@@ -36,57 +32,56 @@ tokens {
 @lexer::header { package ru.vsu; }
 
 
-WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+    { $channel = HIDDEN; } ;
+WHITESPACE :
+    ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+    { $channel = HIDDEN; }
+;
 
 SL_COMMENT:
-  '//' (options { greedy=false; }: .)* '\r'? '\n' {
-    $channel=HIDDEN;
-  }
+  '//' (options { greedy = false; }: .)* '\r'? '\n' { $channel=HIDDEN; }
 ;
+
 ML_COMMENT:
-  '/*' (options { greedy=false; }: .)* '*/' {
-    $channel=HIDDEN;
-  }
+  '/*' (options { greedy = false; }: .)* '*/' { $channel=HIDDEN; }
 ;
 
 
 
-NUMBER: ('0'..'9')+ ('.' ('0'..'9')+)?
+NUMBER: ('0'..'9')+ ('.' ('0'..'9')+)? //
 ;
 IDENT:  ( 'a'..'z' | 'A'..'Z' | '_' )
-        ( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' )*
+        ( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' )* //
 ;
-STRING: '"'(.)*'"';
-ADD:    '+'     ;
-SUB:    '-'     ;
-MUL:    '*'     ;
-DIV:    '/'     ;
-MOD:	'%'		;
+STRING: '"'(.)*'"'; //
+ADD:    '+'     ; //
+SUB:    '-'     ; //
+MUL:    '*'     ; //
+DIV:    '/'     ; //
+MOD:	'%'		; //
 
-GE:       '>='  ;
-LE:       '<='  ;
-NEQUALS:  '!='  ;
-EQUALS:   '=='  ;
-GT:       '>'   ;
-LT:       '<'   ;
+GE:       '>='  ; //
+LE:       '<='  ; //
+NEQUALS:  '!='  ; //
+EQUALS:   '=='  ; //
+GT:       '>'   ; //
+LT:       '<'   ; //
 
-OR:      '||'   ;
-AND:      '&&'   ;
+OR:      '||'   ; //
+AND:      '&&'   ; //
 
-ASSIGN: '='     ;
+ASSIGN: '='     ; //
 
-NOT: '!'		;
+NOT: '!'		; //
 
 
 group:
   '('! term ')'!
-| NUMBER
-| IDENT
+    | NUMBER
+    | IDENT
 ;
 
 
 mult: group ( ( MUL | DIV | MOD )^ group )*  ;
-add:  mult  ( ( ADD | SUB )^ mult  )*  ;
+add:  (mult|STRING)  ( ( ADD | SUB )^ (mult|STRING)  )*  ;
 compare: (add ( ( GE | LE | NEQUALS | EQUALS | GT | LT)^ add )?) | not ;
 and:  compare (AND^ compare )* ;
 or: and (OR^ and )* ;
@@ -100,12 +95,9 @@ func_decl:
   '{'! exprList '}'!
 ;
 
-function_params: ( param (',' param)* )? -> ^(ATTRS param*)  ;
-
-function_body: (IDENT) ;
-
+function_args: ( arg (',' arg)* )? -> ^(ARGS arg*)  ;
 func_call:
-	function_body '(' function_params ')' -> ^(FUNC_CALL function_body function_params)
+	    IDENT '(' function_args ')' -> ^(FUNC_CALL IDENT function_args)
 ;
 
 var_decl:
@@ -119,31 +111,23 @@ decr:
 	(IDENT '--') -> ^(DECR IDENT)
 ;
 
-param:
-term|IDENT
+arg:
+    term|IDENT
 ;
 
-array_params:
-(param (','! param)* )?
+array_args:
+    (arg (','! arg)* )?
 ;
-
 array:
-'[' array_params ']'-> ^(ARRAY array_params)
+    '[' array_args ']'-> ^(ARRAY array_args)
 ;
-
 
 array_call:
-IDENT('['param']') -> ^(ARR_CALL IDENT param)
-;
-
-prompt:
-PROMPT^ '('! term (','! term)?  ')'!
+        IDENT('['arg']') -> ^(ARR_CALL IDENT arg)
 ;
 
 expr1:
-  PRINT^ '('! term ')'!
-| ABS^ '('! term ')'!
-| (IDENT | var_decl) ASSIGN^ (term | prompt)
+  (IDENT | var_decl) ASSIGN^ (term)
 | incr | decr
 | var_decl
 | RETURN^ term?
@@ -153,7 +137,7 @@ expr1:
 
 expr2:
   '{'! exprList '}'!
-| DO expr WHILE '(' term ')' -> ^(DO expr WHILE term)
+| DO expr WHILE '(' term ')' -> ^(DO expr term)
 | WHILE^ '('! term ')'! expr
 | IF^ '('! term ')'! expr ( 'else'! expr )?
 | FOR^ '('! expr1 ';'! or ';'! expr1 ')'! expr
@@ -168,7 +152,6 @@ expr:
 exprList:
   ( expr )* -> ^(BLOCK expr*)
 ;
-
 
 result: exprList EOF!;
 
