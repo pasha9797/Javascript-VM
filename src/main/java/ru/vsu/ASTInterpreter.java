@@ -9,14 +9,22 @@ import ru.vsu.model.abstracts.*;
 import ru.vsu.utils.ToExecNodeConverter;
 
 public class ASTInterpreter {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         CharStream stream = new ANTLRFileStream("input.txt");
         MathLangLexer lexer = new MathLangLexer(stream);
         MathLangParser parser = new MathLangParser(new CommonTokenStream(lexer));
         CommonTree tree = (CommonTree) parser.execute().getTree();
+        if (parser.getNumberOfSyntaxErrors() > 0) {
+            System.out.println("Syntax analysis errors occurred (text above)");
+            return;
+        }
 
-        ExecNode node = ToExecNodeConverter.convertTree(tree, null);
-        DefaultFuncsAdder.addDefaultFuncs((Namespace)node);
-        node.execute();
+        try {
+            ExecNode node = ToExecNodeConverter.convertTree(tree, null);
+            DefaultFuncsAdder.addDefaultFuncs((Namespace) node);
+            node.execute();
+        } catch (Exception e) {
+            System.out.println("Semantic analysis error: " + e.getMessage());
+        }
     }
 }

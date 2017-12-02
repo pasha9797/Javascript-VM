@@ -33,7 +33,7 @@ tokens {
 
 
 WHITESPACE :
-    ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+    { $channel = HIDDEN; }
+    ( '\t' | ' ' | '\r' | '\n'| '\u000C')+    { $channel = HIDDEN; }
 ;
 
 SL_COMMENT:
@@ -72,67 +72,61 @@ ASSIGN: '='     ; //
 
 NOT: '!'		; //
 
+//Math and logic
 
-group:
-  '('! term ')'!
-    | NUMBER
-    | IDENT
-;
-
-
+group: '('! term ')'! | NUMBER | IDENT | function_array_call;
 mult: group ( ( MUL | DIV | MOD )^ group )*  ;
 add:  (mult|STRING)  ( ( ADD | SUB )^ (mult|STRING)  )*  ;
 compare: (add ( ( GE | LE | NEQUALS | EQUALS | GT | LT)^ add )?) | not ;
 and:  compare (AND^ compare )* ;
 or: and (OR^ and )* ;
-term: or | STRING | array | func_decl | func_call | array_call;
+term: or | function_array_call | STRING | array_decl | func_decl ;
 
 not: '!' term -> ^(NOT term);
 
-formal_params: ( IDENT (',' IDENT)* )? -> ^(PARAMS IDENT*)  ;
+//Functions
+
+func_params: ( IDENT (',' IDENT)* )? -> ^(PARAMS IDENT*)  ;
 func_decl:
-  FUNCTION^ IDENT '('! formal_params ')'!
+  FUNCTION^ IDENT '('! func_params ')'!
   '{'! exprList '}'!
 ;
 
-function_args: ( arg (',' arg)* )? -> ^(ARGS arg*)  ;
-func_call:
-	    IDENT '(' function_args ')' -> ^(FUNC_CALL IDENT function_args)
-;
+//Arrays
 
-var_decl:
-	DECL^ IDENT
-;
-
-incr:
-	(IDENT '++') -> ^(INCR IDENT)
-;
-decr:
-	(IDENT '--') -> ^(DECR IDENT)
-;
-
-arg:
-    term|IDENT
-;
-
-array_args:
-    (arg (','! arg)* )?
-;
-array:
+arg: term|IDENT;
+array_args: (arg (','! arg)* )?;
+array_decl:
     '[' array_args ']'-> ^(ARRAY array_args)
 ;
 
-array_call:
-        IDENT('['arg']') -> ^(ARR_CALL IDENT arg)
+//Function and array fuse
+
+function_call_args:
+    '(' (arg (',' arg)*)? ')' -> ^(FUNC_CALL ^(ARGS arg*))
+;
+array_call_arg:
+    '['arg']' -> ^(ARR_CALL arg)
+;
+function_array_call_args: function_call_args | array_call_arg;
+
+function_array_call:
+	    IDENT (function_array_call_args^)+
 ;
 
+//Expressions
+
+var_decl: DECL^ IDENT;
+
+incr: (IDENT '++') -> ^(INCR IDENT);
+decr: (IDENT '--') -> ^(DECR IDENT);
+
 expr1:
-  (IDENT | var_decl) ASSIGN^ (term)
+  (IDENT | var_decl | function_array_call) ASSIGN^ (term)
 | incr | decr
 | var_decl
 | RETURN^ term?
-| func_call
-|array_call
+| function_array_call
 ;
 
 expr2:

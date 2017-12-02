@@ -4,17 +4,16 @@ var a;
 a = 5;
 b = 10;
 c = a + b;
-alert(c);
-
-a = "hello";
-alert(a + " " + c);
+alert("a = " + a);
+alert("b = " + b);
+alert("c = a + b = " + c);
 
 for(var i = 0; i< 4; i++){
     alert("Loop i = " + i);
 }
 
 function test(arg1, arg2){
-    return prompt("Write something" + arg1 + arg2, "default");
+    return prompt("Function test called. Write something" + arg1 + arg2, "default");
 }
 
 function main(args){
@@ -23,28 +22,40 @@ function main(args){
 
 a=4;
 if(a>5){
- alert("a>5");
+ alert("If. branch one: a>5");
 }
 else{
- alert("a<=5");
+ alert("If. branch two: a<=5");
 }
+
+myArr = [345, 567, 876];
+alert("Array - " + myArr);
+myArr[1] = 1;
+alert("Element 1 changed: " + myArr);
 
 if(a==4 && c>0){
     var j = abs(0-5);
     alert("abs of -5: " + j);
 }
 
-var array;
-array=[4,5,6,"str"];
+if(6==7 && 5==4 || 1)
+    alert("Logical test - true!");
+else
+    alert("Logical test - false!");
 
+var array;
+array=[4,5,6,"str", [55,66]];
+alert("going to print array elements");
 i=0;
-while(i<=3){
+while(i<=4){
     alert(array[i]);
     i++;
 }
 
-alert(array);
+alert("Array was: " + array);
 
 test2=test;
 
-alert(test2("ggg", "gggg"));
+alert(test2(" here,", " please"));
+
+alert(arr[1]>arr[2]);

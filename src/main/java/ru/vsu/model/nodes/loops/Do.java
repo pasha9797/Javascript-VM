@@ -18,6 +18,7 @@ public class Do extends ExecNode {
             block = (Block) children.get(0);
 
         ExecNode cond = children.get(1);
+        cond.setParent(block);
 
         do {
             block.execute();

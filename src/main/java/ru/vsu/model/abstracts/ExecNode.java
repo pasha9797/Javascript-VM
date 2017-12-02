@@ -46,7 +46,7 @@ public abstract class ExecNode {
                 return (Namespace) par;
             } else par = par.parent;
         }
-        throw new Exception("Could not find parent namespace of " + this.getClass().getName());
+        throw new Exception("Could not find parent namespace of " + this);
     }
 
     protected Namespace getParentNameSpaceWithVar(String name) throws Exception {
@@ -56,7 +56,7 @@ public abstract class ExecNode {
                 return (Namespace) par;
             } else par = par.parent;
         }
-        throw new Exception("Could not find parent namespace of " + this.getClass().getName() + " with variable " + name);
+        throw new Exception("Could not find parent namespace of node '" + this + "' with variable " + name);
     }
 
     @Override
