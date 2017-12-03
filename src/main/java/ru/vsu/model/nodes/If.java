@@ -16,6 +16,11 @@ public class If extends ExecNode {
     }
 
     public String toString() {
-        return "'If' statement";
+        String str;
+        str = "if("+children.get(0)+")\n"+children.get(1);
+        if(children.size()>2){
+            str+="\nelse\n"+children.get(2);
+        }
+        return str;
     }
 }

@@ -1,5 +1,8 @@
 package ru.vsu.model.abstracts;
 
+import ru.vsu.model.nodes.function.Func_Decl;
+
+import javax.naming.Name;
 import java.util.HashMap;
 
 public abstract class Namespace extends ExecNode {
@@ -7,9 +10,17 @@ public abstract class Namespace extends ExecNode {
     protected Object returnValue = null;
     protected Boolean wasReturn = false;
 
-    public void setReturnValue(Object returnValue) {
+    public void setReturnedValue(Object returnValue) {
         this.returnValue = returnValue;
         wasReturn = true;
+        if(!(parent instanceof Func_Decl)){
+            Namespace ns = getParentNameSpace();
+            ns.setReturnedValue(returnValue);
+        }
+    }
+
+    public Boolean getWasReturn(){
+        return wasReturn;
     }
 
     public void setVarValue(String name, Object value){

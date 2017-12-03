@@ -19,7 +19,7 @@ public class While extends ExecNode{
 
         ExecNode cond = children.get(0);
 
-        while(ToBooleanConverter.convert(cond.execute())){
+        while(ToBooleanConverter.convert(cond.execute()) && !block.getWasReturn()){
             block.execute();
         }
 
@@ -27,6 +27,6 @@ public class While extends ExecNode{
     }
 
     public String toString() {
-        return "'While' loop";
+        return "while("+children.get(0)+")\n"+children.get(1);
     }
 }

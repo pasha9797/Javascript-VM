@@ -18,7 +18,7 @@ public class Abs extends Func_Decl{
     }
     public Abs(){
         Ident name = new Ident();
-        name.setValue("abs");
+        name.setValue("Math.abs");
 
         Container args= new Container();
         Ident arg = new Ident();

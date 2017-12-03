@@ -18,6 +18,8 @@ tokens {
   RETURN    =   'return'    ; //
   WHILE     =   'while'     ; //
   DO        =   'do'	    ; //
+  TRUE      =   'true'      ;
+  FALSE     =   'false'     ;
   INCR				        ; //
   DECR				        ; //
   ARRAY				        ; //
@@ -50,7 +52,9 @@ NUMBER: ('0'..'9')+ ('.' ('0'..'9')+)? //
 ;
 IDENT:  ( 'a'..'z' | 'A'..'Z' | '_' )
         ( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' )* //
+        ( '.'IDENT )?
 ;
+
 STRING: '"'(.)*'"'; //
 ADD:    '+'     ; //
 SUB:    '-'     ; //
@@ -74,13 +78,13 @@ NOT: '!'		; //
 
 //Math and logic
 
-group: '('! term ')'! | NUMBER | IDENT | function_array_call;
+group: '('! term ')'! | NUMBER | IDENT | function_array_call | bool;
 mult: group ( ( MUL | DIV | MOD )^ group )*  ;
 add:  (mult|STRING)  ( ( ADD | SUB )^ (mult|STRING)  )*  ;
 compare: (add ( ( GE | LE | NEQUALS | EQUALS | GT | LT)^ add )?) | not ;
 and:  compare (AND^ compare )* ;
 or: and (OR^ and )* ;
-term: or | function_array_call | STRING | array_decl | func_decl ;
+term: or | function_array_call | STRING | array_decl | func_decl | bool;
 
 not: '!' term -> ^(NOT term);
 
@@ -120,6 +124,8 @@ var_decl: DECL^ IDENT;
 
 incr: (IDENT '++') -> ^(INCR IDENT);
 decr: (IDENT '--') -> ^(DECR IDENT);
+
+bool: TRUE | FALSE;
 
 expr1:
   (IDENT | var_decl | function_array_call) ASSIGN^ (term)

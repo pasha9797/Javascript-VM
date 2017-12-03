@@ -2,20 +2,25 @@ package ru.vsu.model.nodes;
 
 import ru.vsu.model.abstracts.ExecNode;
 import ru.vsu.model.abstracts.Namespace;
+import ru.vsu.model.nodes.function.Func_Decl;
 
 public class Block extends Namespace{
 
     public Object execute() throws Exception {
+        wasReturn = false;
         for(ExecNode cmd: children){
-            if(!wasReturn) {
+            if(!wasReturn || getParentFunction() == null) {
                 cmd.execute();
             }
         }
-        wasReturn = false;
         return returnValue;
     }
 
     public String toString() {
-        return "Block of code";
+        String str="{\n";
+        for(ExecNode node: children){
+            str+=node.toString()+'\n';
+        }
+        return str+"}";
     }
 }

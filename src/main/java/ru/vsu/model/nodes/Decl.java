@@ -8,7 +8,7 @@ public class Decl extends ExecNode {
     public Object execute() throws Exception {
         Namespace ns=getParentNameSpace();
         if(!ns.isVarSet(children.get(0).toString())){
-            ns.setVarValue(children.get(0).toString(), 0);
+            ns.setVarValue(children.get(0).toString(), "undefined");
             return true;
         }
         else

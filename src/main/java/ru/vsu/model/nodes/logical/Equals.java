@@ -13,7 +13,7 @@ public class Equals extends Logical {
     @Override
     public String toString() {
         try {
-            return "(" + children.get(0).toString() + "==" + children.get(1).toString() + ")";
+            return children.get(0).toString() + "==" + children.get(1).toString() ;
         }
         catch (Exception e){
             return "Error: " + e.getMessage();

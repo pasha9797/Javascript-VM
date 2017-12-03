@@ -1,6 +1,7 @@
 package ru.vsu.utils;
 
 import org.antlr.runtime.tree.CommonTree;
+import ru.vsu.MathLangLexer;
 import ru.vsu.model.abstracts.*;
 import ru.vsu.MathLangParser;
 import ru.vsu.model.nodes.*;
@@ -11,20 +12,20 @@ import ru.vsu.model.nodes.loops.*;
 import ru.vsu.model.nodes.math.*;
 
 public class ToExecNodeConverter {
-    public static ExecNode convertTree(CommonTree node, ExecNode parent) throws Exception{
-        ExecNode newNode= ToExecNodeConverter.convertNode(node);
-        if(parent!=null) {
+    public static ExecNode convertTree(CommonTree node, ExecNode parent) throws Exception {
+        ExecNode newNode = ToExecNodeConverter.convertNode(node);
+        if (parent != null) {
             newNode.setParent(parent);
             parent.getChildren().add(newNode);
         }
 
-        if(node.getChildCount()>0) {
+        if (node.getChildCount() > 0) {
             for (Object child : node.getChildren()) {
                 convertTree((CommonTree) child, newNode);
             }
         }
 
-        if(newNode instanceof Func_Decl){
+        if (newNode instanceof Func_Decl) {
             newNode.execute();
         }
 
@@ -46,17 +47,17 @@ public class ToExecNodeConverter {
             case MathLangParser.MOD:
                 return new Mod();
             case MathLangParser.NUMBER:
-                ex =new SomeType();
+                ex = new SomeType();
                 Number num = Float.valueOf(node.getText());
                 ex.setValue(num);
                 return ex;
             case MathLangParser.IDENT:
-                ex =new Ident();
+                ex = new Ident();
                 ex.setValue(node.getText());
                 return ex;
             case MathLangParser.STRING:
-                ex =new SomeType();
-                ex.setValue(node.getText().substring(1, node.getText().length()-1));
+                ex = new SomeType();
+                ex.setValue(node.getText().substring(1, node.getText().length() - 1));
                 return ex;
             case MathLangParser.GE:
                 return new GE();
@@ -108,6 +109,11 @@ public class ToExecNodeConverter {
                 return new Container();
             case MathLangParser.ARGS:
                 return new Container();
+            case MathLangParser.TRUE:
+            case MathLangParser.FALSE:
+                ex = new LogicKeyword();
+                ex.setValue(node.getText());
+                return ex;
             default:
                 throw new Exception("Fail to convert AST tree: unknown token: " + node.getText());
         }

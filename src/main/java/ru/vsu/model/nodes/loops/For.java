@@ -27,7 +27,7 @@ public class For extends ExecNode {
         repeat.setParent(block);
 
         init.execute();
-        while(ToBooleanConverter.convert(cond.execute())){
+        while(ToBooleanConverter.convert(cond.execute()) && !block.getWasReturn()){
             block.execute();
             repeat.execute();
         }
@@ -36,6 +36,6 @@ public class For extends ExecNode {
     }
 
     public String toString() {
-        return "'For' loop";
+        return "for("+children.get(0)+';'+children.get(1)+';'+children.get(2)+")\n"+children.get(3);
     }
 }

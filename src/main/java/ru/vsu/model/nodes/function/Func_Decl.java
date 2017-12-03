@@ -31,6 +31,6 @@ public class Func_Decl extends ExecNode {
     }
 
     public String toString() {
-        return children.get(0).toString() + "(" + children.get(1).getChildren() + ")";
+        return "function " + children.get(0).toString() + "(" + children.get(1).getChildren() + ")" + body.toString();
     }
 }

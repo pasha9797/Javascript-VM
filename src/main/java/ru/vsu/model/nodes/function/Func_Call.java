@@ -20,6 +20,6 @@ public class Func_Call extends ExecNode {
     }
 
     public String toString() {
-        return "call " + children.get(1).toString() + "(" + children.get(0).getChildren() +  ")";
+        return children.get(1).toString() + "(" + children.get(0).getChildren() +  ")";
     }
 }

@@ -10,12 +10,12 @@ import ru.vsu.utils.ToExecNodeConverter;
 
 public class ASTInterpreter {
     public static void main(String[] args) throws Exception {
-        CharStream stream = new ANTLRFileStream("input.txt");
+        CharStream stream = new ANTLRFileStream("input.js");
         MathLangLexer lexer = new MathLangLexer(stream);
         MathLangParser parser = new MathLangParser(new CommonTokenStream(lexer));
         CommonTree tree = (CommonTree) parser.execute().getTree();
         if (parser.getNumberOfSyntaxErrors() > 0) {
-            System.out.println("Syntax analysis errors occurred (text above)");
+            System.out.println((char) 27 + "[35m" + "Syntax analysis errors occurred (text above)" + (char)27 + "[0m");
             return;
         }
 
@@ -24,7 +24,8 @@ public class ASTInterpreter {
             DefaultFuncsAdder.addDefaultFuncs((Namespace) node);
             node.execute();
         } catch (Exception e) {
-            System.out.println("Semantic analysis error: " + e.getMessage());
+            System.out.println((char) 27 + "[35m" + "Semantic analysis error: " + e.getMessage() + (char)27 + "[0m");
+
         }
     }
 }

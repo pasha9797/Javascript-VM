@@ -22,12 +22,12 @@ public class Do extends ExecNode {
 
         do {
             block.execute();
-        } while (ToBooleanConverter.convert(cond.execute()));
+        } while (ToBooleanConverter.convert(cond.execute()) && !block.getWasReturn());
 
         return this;
     }
 
     public String toString() {
-        return "'Do-While' loop";
+        return "do\n"+children.get(0)+"\nwhile("+children.get(1)+")";
     }
 }
