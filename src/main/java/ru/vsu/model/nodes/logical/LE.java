@@ -1,21 +1,21 @@
 package ru.vsu.model.nodes.logical;
 
 import ru.vsu.model.abstracts.Logical;
+import ru.vsu.model.nodes.SomeType;
 
 public class LE extends Logical {
-    public Object execute() throws Exception {
-        Object op1= executeChild(0);
-        Object op2=executeChild(1);
+    public SomeType execute() throws Exception {
+        SomeType op1= executeChild(0);
+        SomeType op2= executeChild(1);
 
-        if(op1 instanceof java.lang.Number && op2 instanceof java.lang.Number){
-            return ((Number) op1).floatValue() <= ((Number) op2).floatValue();
-        }
-        else if(op1 instanceof String && op2 instanceof String){
-            return ((String) op1).compareTo((String) op2) <=0;
-        }
-        else{
-            throw new Exception("Unable to compare non-numbers and non-strings");
-        }
+        return op1.le(op2);
+    }
+
+    public String GenerateCode() throws Exception {
+        String s = "";
+        s += children.get(0).GenerateCode();
+        s += children.get(1).GenerateCode();
+        return s + String.format("%d: le\n", Pointer++);
     }
 
     @Override

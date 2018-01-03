@@ -80,7 +80,7 @@ NOT: '!'		; //
 
 group: '('! term ')'! | NUMBER | IDENT | function_array_call | bool;
 mult: group ( ( MUL | DIV | MOD )^ group )*  ;
-add:  (mult|STRING)  ( ( ADD | SUB )^ (mult|STRING)  )*  ;
+add:  ((mult|STRING)  ( ( ADD | SUB )^ (mult|STRING)  )*) | incr | decr  ;
 compare: (add ( ( GE | LE | NEQUALS | EQUALS | GT | LT)^ add )?) | not ;
 and:  compare (AND^ compare )* ;
 or: and (OR^ and )* ;
@@ -129,8 +129,8 @@ bool: TRUE | FALSE;
 
 expr1:
   (IDENT | var_decl | function_array_call) ASSIGN^ (term)
-| incr | decr
 | var_decl
+| incr | decr
 | RETURN^ term?
 | function_array_call
 ;

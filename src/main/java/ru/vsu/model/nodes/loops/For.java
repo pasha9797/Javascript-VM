@@ -1,12 +1,14 @@
 package ru.vsu.model.nodes.loops;
 
 import ru.vsu.model.nodes.Block;
+import ru.vsu.model.nodes.SomeType;
 import ru.vsu.utils.ToBooleanConverter;
 import ru.vsu.model.abstracts.ExecNode;
 
 public class For extends ExecNode {
-    public Object execute() throws Exception {
-        Block block;
+    Block block;
+    ExecNode init, cond, repeat;
+    public SomeType execute() throws Exception {
 
         if (!(children.get(3) instanceof Block)) { //AST modification
             block = new Block();
@@ -17,22 +19,33 @@ public class For extends ExecNode {
         } else
             block = (Block) children.get(3);
 
-        ExecNode init = children.get(0);
+        init = children.get(0);
         init.setParent(block);
 
-        ExecNode cond = children.get(1);
+        cond = children.get(1);
         cond.setParent(block);
 
-        ExecNode repeat = children.get(2);
+        repeat = children.get(2);
         repeat.setParent(block);
 
         init.execute();
-        while(ToBooleanConverter.convert(cond.execute()) && !block.getWasReturn()){
+        while(ToBooleanConverter.convert(cond.execute().getValue()) && !block.getWasReturn()){
             block.execute();
             repeat.execute();
         }
 
-        return this;
+        return new SomeType(this);
+    }
+
+    public String GenerateCode() throws Exception {
+        String s = "\n%s%s%d: jumpFalse %d\n%s%s\n";
+        String initCode=init.GenerateCode();
+        String condCode = cond.GenerateCode();
+        int curID = Pointer++;
+        String blockCode = block.GenerateCode();
+        String repeatCode = repeat.GenerateCode();
+        int jumpID = Pointer;
+        return String.format(s, initCode, condCode, curID, jumpID, blockCode, repeatCode);
     }
 
     public String toString() {

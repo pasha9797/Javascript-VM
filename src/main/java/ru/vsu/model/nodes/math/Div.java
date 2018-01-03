@@ -1,18 +1,21 @@
 package ru.vsu.model.nodes.math;
 
 import ru.vsu.model.abstracts.ExecNode;
+import ru.vsu.model.nodes.SomeType;
 
 public class Div extends ExecNode {
-    public Object execute() throws Exception {
-        Object op1= executeChild(0);
-        Object op2= executeChild(1);
+    public SomeType execute() throws Exception {
+        SomeType op1= executeChild(0);
+        SomeType op2=executeChild(1);
 
-        if(op1 instanceof java.lang.Number && op2 instanceof java.lang.Number){
-            return ((Number) op1).floatValue() / ((Number) op2).floatValue();
-        }
-        else{
-            throw new Exception("Unable to divide non-numbers");
-        }
+        return op1.div(op2);
+    }
+
+    public String GenerateCode() throws Exception {
+        String s = "";
+        s += children.get(0).GenerateCode();
+        s += children.get(1).GenerateCode();
+        return s + String.format("%d: div\n", Pointer++);
     }
 
     @Override

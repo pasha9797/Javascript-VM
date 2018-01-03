@@ -2,6 +2,7 @@ package ru.vsu.model.defaultFuncs;
 
 import ru.vsu.model.nodes.Block;
 import ru.vsu.model.nodes.Container;
+import ru.vsu.model.nodes.SomeType;
 import ru.vsu.model.nodes.function.Func_Decl;
 import ru.vsu.model.nodes.Ident;
 
@@ -9,9 +10,15 @@ import java.util.List;
 
 public class Abs extends Func_Decl{
     @Override
-    public Object call(List<Object> args) throws Exception{
-        if(args.size()==1 && args.get(0) instanceof Number){
-            return Math.abs(((Number) args.get(0)).floatValue());
+    public SomeType call(List<SomeType> args) throws Exception{
+        if(args.size()==1){
+            SomeType val = args.get(0);
+            if(val.getValue() instanceof Number) {
+                Float res = Math.abs(((Number) val.getValue()).floatValue());
+                return new SomeType(res);
+            }
+            else
+                throw new Exception("Abs argument must be a number");
         }
         else
             throw new Exception("Abs must accept 1 argument");

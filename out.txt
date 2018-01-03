@@ -1,0 +1,195 @@
+0: decl 5236
+1: push 345
+2: popToArray 5236 0
+3: push 567
+4: popToArray 5236 1
+5: push 876
+6: popToArray 5236 2
+7: pushFromVar 5236
+8: pop 2441_myArr
+
+9: push "Array - "
+10: pushFromVar 2441_myArr
+11: add
+12: push 15
+13: pushFromVar 2441_alert
+14: call
+
+15: push 1
+16: popToArray 2441_myArr 1
+
+17: push "Element 1 changed: "
+18: pushFromVar 2441_myArr
+19: add
+20: push 23
+21: pushFromVar 2441_alert
+22: call
+
+23: decl 2441_array
+24: decl 1227
+25: push 4
+26: popToArray 1227 0
+27: push 5
+28: popToArray 1227 1
+29: push 6
+30: popToArray 1227 2
+31: push "str"
+32: popToArray 1227 3
+33: decl 3776
+34: push 55
+35: popToArray 3776 0
+36: push 66
+37: popToArray 3776 1
+38: pushFromVar 3776
+39: popToArray 1227 4
+40: pushFromVar 1227
+41: pop 2441_array
+
+42: push "going to print array elements"
+43: push 46
+44: pushFromVar 2441_alert
+45: call
+
+46: push 0
+47: pop 2441_i
+
+48: pushFromVar 2441_i
+49: push 4
+50: le
+51: jumpFalse 62
+
+
+52: pushFromVar 2441_array
+53: pushFromVar 2441_i
+54: pushFromArray
+
+55: push 58
+56: pushFromVar 2441_alert
+57: call
+
+58: pushFromVar 2441_i
+59: push 1
+60: add
+61: pop i
+
+
+62: push "Array was: "
+63: pushFromVar 2441_array
+64: add
+65: push 68
+66: pushFromVar 2441_alert
+67: call
+
+68: decl 4915
+69: push 34
+70: popToArray 4915 0
+71: push 203
+72: popToArray 4915 1
+73: push 3
+74: popToArray 4915 2
+75: push 746
+76: popToArray 4915 3
+77: push 200
+78: popToArray 4915 4
+79: push 984
+80: popToArray 4915 5
+81: push 198
+82: popToArray 4915 6
+83: push 764
+84: popToArray 4915 7
+85: push 9
+86: popToArray 4915 8
+87: pushFromVar 4915
+88: pop 2441_a
+
+89: pushFromVar 2441_a
+90: push 93
+91: pushFromVar 2441_alert
+92: call
+
+
+93: push "going to sort"
+94: push 97
+95: pushFromVar 2441_alert
+96: call
+
+
+97: functionStart 2441_bubbleSort
+98: decl 8611_retID
+99: pop 8611_retID
+100: decl 8611_length
+101: pop 8611_length
+102: decl 8611_a
+103: pop 8611_a
+104: decl 8611_swapped
+
+105: push 0
+106: pop 8611_swapped
+
+107: push 0
+108: pop 2441_i
+109: pushFromVar 2441_i
+110: pushFromVar 8611_length
+111: push 1
+112: sub
+113: lt
+114: jumpFalse 143
+
+
+115: pushFromVar 8611_a
+116: pushFromVar 2441_i
+117: pushFromArray
+
+
+118: pushFromVar 8611_a
+119: pushFromVar 2441_i
+120: push 1
+121: add
+122: pushFromArray
+
+123: gt
+124: jumpFalse 139
+
+125: pushFromVar 8611_a
+126: pushFromVar 2441_i
+127: pushFromArray
+
+128: pop 2342_temp
+
+129: pushFromVar 8611_a
+130: pushFromVar 2441_i
+131: push 1
+132: add
+133: pushFromArray
+
+134: popToArray 8611_a 8
+135: pushFromVar 2342_temp
+136: popToArray 8611_a 9
+137: push 1
+138: pop 8611_swapped
+
+139: pushFromVar 2441_i
+140: push 1
+141: add
+142: pop i
+
+143: pushFromVar 8611_swapped
+144: not
+145: jumpTrue 105
+
+146: functionEnd 2441_bubbleSort
+147: pushFromVar 2441_bubbleSort
+
+
+148: pushFromVar 2441_a
+149: push 9
+150: push 153
+151: pushFromVar 2441_bubbleSort
+152: call
+
+
+153: pushFromVar 2441_a
+154: push 157
+155: pushFromVar 2441_alert
+156: call
+

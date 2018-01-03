@@ -1,13 +1,21 @@
 package ru.vsu.model.nodes.logical;
 
 import ru.vsu.model.abstracts.Logical;
+import ru.vsu.model.nodes.SomeType;
 
 public class Equals extends Logical {
-    public Object execute() throws Exception {
-        Object op1= executeChild(0);
-        Object op2=executeChild(1);
+    public SomeType execute() throws Exception {
+        SomeType op1= executeChild(0);
+        SomeType op2= executeChild(1);
 
-        return op1.equals(op2);
+        return op1.eq(op2);
+    }
+
+    public String GenerateCode() throws Exception {
+        String s = "";
+        s += children.get(0).GenerateCode();
+        s += children.get(1).GenerateCode();
+        return s + String.format("%d: equals\n", Pointer++);
     }
 
     @Override

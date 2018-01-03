@@ -1,11 +1,13 @@
 package ru.vsu.model.abstracts;
 
+import ru.vsu.model.nodes.SomeType;
 import ru.vsu.model.nodes.function.Func_Decl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ExecNode {
+    public static int Pointer = 0;
     protected ExecNode parent = null;
     protected List<ExecNode> children = new ArrayList<ExecNode>();
     protected Object value = null;
@@ -35,9 +37,11 @@ public abstract class ExecNode {
         this.value = value;
     }
 
-    public abstract Object execute() throws Exception;
+    public abstract SomeType execute() throws Exception;
 
-    protected Object executeChild(int id) throws Exception {
+    public abstract String GenerateCode() throws Exception;
+
+    protected SomeType executeChild(int id) throws Exception {
         return children.get(id).execute();
     }
 

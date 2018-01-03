@@ -2,11 +2,13 @@ package ru.vsu;
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
+import ru.vsu.utils.Configurator;
+
 import java.util.ArrayList;
 
 public class ASTPrinter {
     public static void main(String[] args) throws Exception {
-        CharStream stream = new ANTLRFileStream("input.js");
+        CharStream stream = new ANTLRFileStream(Configurator.getPrinterFile());
         MathLangLexer lexer = new MathLangLexer(stream);
         MathLangParser parser = new MathLangParser(new CommonTokenStream(lexer));
         CommonTree tree = (CommonTree) parser.execute().getTree();

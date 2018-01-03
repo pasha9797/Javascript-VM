@@ -1,16 +1,17 @@
 package ru.vsu.model.abstracts;
 
+import ru.vsu.model.nodes.SomeType;
 import ru.vsu.model.nodes.function.Func_Decl;
 
 import javax.naming.Name;
 import java.util.HashMap;
 
 public abstract class Namespace extends ExecNode {
-    private HashMap<String, Object> var_table=new HashMap<String, Object>();
-    protected Object returnValue = null;
+    private HashMap<String, SomeType> var_table=new HashMap<String, SomeType>();
+    protected SomeType returnValue = null;
     protected Boolean wasReturn = false;
 
-    public void setReturnedValue(Object returnValue) {
+    public void setReturnedValue(SomeType returnValue) {
         this.returnValue = returnValue;
         wasReturn = true;
         if(!(parent instanceof Func_Decl)){
@@ -23,11 +24,11 @@ public abstract class Namespace extends ExecNode {
         return wasReturn;
     }
 
-    public void setVarValue(String name, Object value){
+    public void setVarValue(String name, SomeType value){
         var_table.put(name, value);
     }
 
-    public Object getVarValue(String name) throws Exception{
+    public SomeType getVarValue(String name) throws Exception{
         if(isVarSet(name)){
             return var_table.get(name);
         }

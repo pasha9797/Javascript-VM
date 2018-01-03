@@ -1,17 +1,22 @@
 package ru.vsu.model.nodes.logical;
 
+import ru.vsu.model.nodes.SomeType;
 import ru.vsu.utils.ToBooleanConverter;
 import ru.vsu.model.abstracts.Logical;
 
 public class Or extends Logical {
-    public Object execute() throws Exception {
-        Object op1 = executeChild(0);
-        Object op2 = executeChild(1);
+    public SomeType execute() throws Exception {
+        SomeType op1= executeChild(0);
+        SomeType op2= executeChild(1);
 
-        op1 = ToBooleanConverter.convert(op1);
-        op2 = ToBooleanConverter.convert(op2);
+        return op1.or(op2);
+    }
 
-        return (Boolean) op1 || (Boolean) op2;
+    public String GenerateCode() throws Exception {
+        String s = "";
+        s += children.get(0).GenerateCode();
+        s += children.get(1).GenerateCode();
+        return s + String.format("%d: or\n", Pointer++);
     }
 
     @Override

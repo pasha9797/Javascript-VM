@@ -2,6 +2,7 @@ package ru.vsu.model.defaultFuncs;
 
 import ru.vsu.model.nodes.Block;
 import ru.vsu.model.nodes.Container;
+import ru.vsu.model.nodes.SomeType;
 import ru.vsu.model.nodes.function.Func_Decl;
 import ru.vsu.model.nodes.Ident;
 
@@ -10,11 +11,11 @@ import java.util.List;
 
 public class Prompt extends Func_Decl{
     @Override
-    public Object call(List<Object> args) throws Exception{
+    public SomeType call(List<SomeType> args) throws Exception{
         if(args.size()==2){
             System.out.print(args.get(0)+": ");
             Scanner in = new Scanner(System.in);
-            return in.nextLine();
+            return new SomeType(in.nextLine());
         }
         else
             throw new Exception("Promt must accept 2 argument");

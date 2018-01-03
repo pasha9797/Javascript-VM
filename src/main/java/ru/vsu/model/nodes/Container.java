@@ -3,7 +3,11 @@ package ru.vsu.model.nodes;
 import ru.vsu.model.abstracts.ExecNode;
 
 public class Container extends ExecNode{
-    public Object execute() throws Exception {
+    public SomeType execute() throws Exception {
+        return null;
+    }
+
+    public String GenerateCode() throws Exception {
         return null;
     }
 

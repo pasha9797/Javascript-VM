@@ -5,8 +5,13 @@ import ru.vsu.model.abstracts.Namespace;
 import ru.vsu.model.nodes.function.Func_Decl;
 
 public class Return extends ExecNode {
-    public Object execute() throws Exception {
-        Object returnValue = executeChild(0);
+    SomeType returnValue;
+    public SomeType execute() throws Exception {
+        if(children.size()>0)
+            returnValue = executeChild(0);
+        else
+            returnValue = null;
+
         Func_Decl func = getParentFunction();
         if(func != null) {
             Namespace ns = getParentNameSpace();
@@ -15,7 +20,11 @@ public class Return extends ExecNode {
         else{
             throw new Exception("Return statement not inside function");
         }
-        return this;
+        return new SomeType(this);
+    }
+
+    public String GenerateCode() throws Exception {
+        return String.format("%s%d: return\n", children.get(0).GenerateCode(), Pointer++);
     }
 
     public String toString() {

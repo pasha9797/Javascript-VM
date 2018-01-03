@@ -47,17 +47,14 @@ public class ToExecNodeConverter {
             case MathLangParser.MOD:
                 return new Mod();
             case MathLangParser.NUMBER:
-                ex = new SomeType();
                 Number num = Float.valueOf(node.getText());
-                ex.setValue(num);
-                return ex;
+                return new SomeType(num);
             case MathLangParser.IDENT:
                 ex = new Ident();
                 ex.setValue(node.getText());
                 return ex;
             case MathLangParser.STRING:
-                ex = new SomeType();
-                ex.setValue(node.getText().substring(1, node.getText().length() - 1));
+                ex = new SomeType(node.getText().substring(1, node.getText().length() - 1));
                 return ex;
             case MathLangParser.GE:
                 return new GE();
