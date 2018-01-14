@@ -6,7 +6,11 @@
 
     <groupId>ru.vsu</groupId>
     <artifactId>antlrProj</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>virtualMachine</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>org.antlr</groupId>

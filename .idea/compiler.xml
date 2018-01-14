@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="antlrProj" />
+        <module name="virtualMachine" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="antlrProj" target="1.8" />
+      <module name="virtualMachine" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
