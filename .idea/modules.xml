@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/antlrProj.iml" filepath="$PROJECT_DIR$/antlrProj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/codeGenerator/codeGenerator.iml" filepath="$PROJECT_DIR$/codeGenerator/codeGenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/virtualMachine/virtualMachine.iml" filepath="$PROJECT_DIR$/virtualMachine/virtualMachine.iml" />
     </modules>
   </component>
